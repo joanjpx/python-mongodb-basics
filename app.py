@@ -9,10 +9,13 @@ db = client['teststore'];
 ProductsCollection = db['products'];
 UserCollection = db['users'];
 
-product = {
+product = [{
 	"name" : "iMac Pro I5",
 	"price" : 2300.00
-};
+},{
+	"name" : "Apple KeyBoard",
+	"price" : 300.00
+}];
 
 user = {
 	"user": "root",
@@ -21,13 +24,19 @@ user = {
 	"role": "admin"
 }
 ## INSERT DATA
-ProductsCollection.insert_one(product);
+ProductsCollection.insert_many(product);
 UserCollection.insert_one(user);
 
 ## RETRIEVING DATA
 results = ProductsCollection.find();
 filteredResults = ProductsCollection.find({"price":2300})
+result = UserCollection.find_one({});
 
+print(result);
 
-for r in filteredResults:
+ProductsCollection.delete_many({"price":1900})
+
+for r in results:
 	print(r['name']);
+
+
